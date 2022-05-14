@@ -23,7 +23,13 @@
     "extends": [
       "react-app",
       "react-app/jest"
-    ]
+    ],
+    "rules": {
+      "indent": [
+        "error",
+        2
+      ]
+    }
   },
   "browserslist": {
     "production": [
@@ -36,5 +42,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "jest-fetch-mock": "^3.0.3"
   }
 }

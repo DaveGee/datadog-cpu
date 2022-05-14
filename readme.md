@@ -24,7 +24,8 @@ cd front && npm test
 ## Todos
 
 - [x] Backend that can give back the cpu load through an API
-- [ ] React Frontend (+redux?) to get the data every 10s and display the current load
+- [x] React Frontend (+redux?) able to fetch the load
+- [x] Fetch on load and every 10s
     - [ ] Store in the front in an appropriate DS. Discard useless data points
     - [ ] Identify load events in the front (heavy load = 2min+ @ >1.0, recovery = 2min+ @ <1.0)
 - [ ] Display load in line graph + display current load
@@ -32,6 +33,11 @@ cd front && npm test
 - [ ] Display heavy loads in the graph
 - [ ] Display events (load + recovery)
 - [ ] Alert each time there's a detected change (desktop alert? other?)
+
+### Misc
+
+- [] No types (TS would be nice) to test for robustness. Did not bother to add tests for "types"
+- [] Trusting that the API returns what it says. Not handling API errors, timeouts
 
 ## Architecture & UX
 

@@ -1,12 +1,64 @@
-import loadReducer from '../features/loadMetric/loadSlice'
-  
-  describe('load metric reducer should', () => {
+import React from 'react'
+import { render, waitFor, screen } from '@testing-library/react'
+import { Provider } from 'react-redux'
+import { store } from '../app/store'
+import LoadMetric from '../features/cpuLoad/LoadMetric'
+import { refreshLoadAsync } from '../features/cpuLoad/loadSlice'
 
-    it('should handle initial state', () => {
-      expect(loadReducer(undefined, { type: 'unknown' })).toEqual({
-        currentLoad: 0,
-      })
-    })
-  
+
+describe('The Load Metric should', () => {
+  beforeEach(() => {
+    fetch.resetMocks()
   })
-  
+
+  test('display 0 by default', () => {
+    render(
+      <Provider store={store}>
+        <LoadMetric />
+      </Provider>
+    )
+
+    expect(screen.getByText('Current load')).toBeInTheDocument()
+    expect(screen.getByText('0')).toBeInTheDocument()
+
+  })
+
+  test('call the load API to get the value on refresh action', async () => {
+
+    fetch.mockResponseOnce(JSON.stringify({
+      "numCpus": 8,
+      "load1": 1.16,
+      "normalizedLoad": 0.14
+    }))
+
+    store.dispatch(refreshLoadAsync())
+
+    expect(fetch.mock.calls.length).toEqual(1)
+    expect(fetch.mock.calls[0][0]).toEqual('http://localhost:8080/load')
+
+    await waitFor(() => {
+      expect(store.getState().cpuLoad.currentLoad).toEqual(0.14)
+    })
+  })
+
+  test('fetch the CPU load once the view is initiated', async () => {
+    fetch.mockResponseOnce(JSON.stringify({
+      "numCpus": 8,
+      "load1": 1.16,
+      "normalizedLoad": 0.14
+    }))
+
+    render(
+      <Provider store={store}>
+        <LoadMetric />
+      </Provider>
+    )
+
+    expect(fetch.mock.calls.length).toEqual(1)
+    expect(fetch.mock.calls[0][0]).toEqual('http://localhost:8080/load')
+
+    await waitFor(() => {
+      expect(screen.getByText('0.14')).toBeInTheDocument()
+    })
+  })
+})
