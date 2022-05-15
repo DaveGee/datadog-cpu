@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'
 import { store } from '../app/store'
 import LoadMetric from '../features/cpuLoad/LoadMetric'
 import { refreshLoadAsync } from '../features/cpuLoad/loadSlice'
-
+import { baseUrl } from '../config'
 
 describe('The Load Metric should', () => {
   beforeEach(() => {
@@ -20,7 +20,6 @@ describe('The Load Metric should', () => {
 
     expect(screen.getByText('Current load')).toBeInTheDocument()
     expect(screen.getByText('0')).toBeInTheDocument()
-
   })
 
   test('call the load API to get the value on refresh action', async () => {
@@ -34,14 +33,14 @@ describe('The Load Metric should', () => {
     store.dispatch(refreshLoadAsync())
 
     expect(fetch.mock.calls.length).toEqual(1)
-    expect(fetch.mock.calls[0][0]).toEqual('http://localhost:8080/load')
+    expect(fetch.mock.calls[0][0]).toEqual(baseUrl + 'load')
 
     await waitFor(() => {
       expect(store.getState().cpuLoad.currentLoad).toEqual(0.14)
     })
   })
 
-  test('fetch the CPU load once the view is initiated', async () => {
+  test('display the CPU load fetched from the backend', async () => {
     fetch.mockResponseOnce(JSON.stringify({
       "numCpus": 8,
       "load1": 1.16,
@@ -55,7 +54,7 @@ describe('The Load Metric should', () => {
     )
 
     expect(fetch.mock.calls.length).toEqual(1)
-    expect(fetch.mock.calls[0][0]).toEqual('http://localhost:8080/load')
+    expect(fetch.mock.calls[0][0]).toEqual(baseUrl + 'load')
 
     await waitFor(() => {
       expect(screen.getByText('0.14')).toBeInTheDocument()

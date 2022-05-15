@@ -55,6 +55,15 @@ cd front && npm test
 
 ## Notes
 
+### `2022-05-15`
+
+
+- Considered RTK Query, but made the whole thing difficult to AT test
+- React-redux is the binding to simplify boilerplate between React and redux (the connect, mapStateToProps, etc...)
+- Redux toolkit is a wrapper to redux boilerplates, and RTK Query is a toolset to simplify common data fetching user cases (building API)
+
+### `2022-05-14`
+
 - Used Create-react-app to speed up the process
 - 1 data point every 10s, for 10min window = 60 data points max
 - 2min window = 12 data points (=12 consecutive values > 1.0)

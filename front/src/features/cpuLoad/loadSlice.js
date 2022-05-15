@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { fetchLoadMetric } from './loadAPI'
+import { fetchLoadMetric } from '../../services/loadAPI'
 
 const initialState = {
   currentLoad: 0,

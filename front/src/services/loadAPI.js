@@ -1,5 +1,5 @@
 
-const apiUrl = 'http://localhost:8080'
+import { baseUrl } from '../config' 
 
 export function fetchLoadMetric() {
   const options = {
@@ -9,6 +9,6 @@ export function fetchLoadMetric() {
     })
   }
 
-  return fetch(apiUrl + '/load', options)
+  return fetch(baseUrl + 'load', options)
     .then(res => res.json())
 }

@@ -13,7 +13,6 @@ const LoadMetric = () => {
     dispatch(refreshLoadAsync())
   }, [dispatch])
 
-
   return <div className={styles.metricContainer}>
     <span className={styles.metricLabel}>Current load</span>
     <span className={styles.metricValue}>{currentLoad}</span>
