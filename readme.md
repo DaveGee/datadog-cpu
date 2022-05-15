@@ -57,7 +57,7 @@ cd front && npm test
 
 ### `2022-05-15`
 
-
+- 10s interval is hard coded
 - Considered RTK Query, but made the whole thing difficult to AT test
 - React-redux is the binding to simplify boilerplate between React and redux (the connect, mapStateToProps, etc...)
 - Redux toolkit is a wrapper to redux boilerplates, and RTK Query is a toolset to simplify common data fetching user cases (building API)

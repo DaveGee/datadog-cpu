@@ -11,6 +11,9 @@ const LoadMetric = () => {
 
   useEffect(() => {
     dispatch(refreshLoadAsync())
+    const pollster = setInterval(() => dispatch(refreshLoadAsync()), 10000)
+
+    return () => clearInterval(pollster)
   }, [dispatch])
 
   return <div className={styles.metricContainer}>
