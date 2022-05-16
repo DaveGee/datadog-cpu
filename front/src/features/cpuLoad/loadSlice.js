@@ -3,6 +3,7 @@ import { fetchLoadMetric } from '../../services/loadAPI'
 
 const initialState = {
   currentLoad: 0,
+  loadHistory: []
 }
 
 export const refreshLoadAsync = createAsyncThunk(
@@ -17,7 +18,12 @@ export const loadSlice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(refreshLoadAsync.fulfilled, (state, action) => {
-        state.currentLoad = action.payload.normalizedLoad || 0
+        const normalizedLoad = action.payload.normalizedLoad || 0
+        state.currentLoad = normalizedLoad
+        state.loadHistory.push(normalizedLoad)
+        if (state.loadHistory.length > 60) {
+          state.loadHistory.shift()
+        }
       })
   }
 })
