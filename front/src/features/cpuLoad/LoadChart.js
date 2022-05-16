@@ -1,9 +1,9 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { refreshLoadAsync, selectCurrentLoad } from './loadSlice'
-import styles from './LoadMetric.module.css'
+import styles from './LoadChart.module.css'
 
-const LoadMetric = () => {
+const LoadChart = () => {
 
   const dispatch = useDispatch()
 
@@ -16,10 +16,11 @@ const LoadMetric = () => {
     return () => clearInterval(pollster)
   }, [dispatch])
 
-  return <div className={styles.metricContainer}>
+  return <div className={styles.loadChartContainer}>
+    <h2>CPU Load: 10 minute window</h2>
     <span className={styles.metricLabel}>Current load</span>
     <span className={styles.metricValue}>{currentLoad}</span>
   </div>
 }
 
-export default LoadMetric
+export default LoadChart

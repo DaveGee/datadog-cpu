@@ -2,11 +2,11 @@ import React from 'react'
 import { cleanup, render, waitFor, screen } from '@testing-library/react'
 import { Provider } from 'react-redux'
 import { store } from '../app/store'
-import LoadMetric from '../features/cpuLoad/LoadMetric'
+import LoadChart from '../features/cpuLoad/LoadChart'
 import { refreshLoadAsync } from '../features/cpuLoad/loadSlice'
 import { baseUrl } from '../config'
 
-describe('The Load Metric should', () => {
+describe('The Load Chart widget should', () => {
   beforeEach(() => {
     fetch.resetMocks()
     cleanup()
@@ -16,7 +16,7 @@ describe('The Load Metric should', () => {
   test('display 0 by default', () => {
     render(
       <Provider store={store}>
-        <LoadMetric />
+        <LoadChart />
       </Provider>
     )
 
@@ -25,7 +25,6 @@ describe('The Load Metric should', () => {
   })
 
   test('call the load API to get the value on refresh action', async () => {
-
     fetch.mockResponseOnce(JSON.stringify({
       "numCpus": 8,
       "load1": 1.16,
@@ -51,7 +50,7 @@ describe('The Load Metric should', () => {
 
     render(
       <Provider store={store}>
-        <LoadMetric />
+        <LoadChart />
       </Provider>
     )
 
@@ -75,7 +74,7 @@ describe('The Load Metric should', () => {
 
     render(
       <Provider store={store}>
-        <LoadMetric />
+        <LoadChart />
       </Provider>
     )
     expect(fetch.mock.calls.length).toEqual(1)

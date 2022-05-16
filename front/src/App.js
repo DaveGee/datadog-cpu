@@ -1,12 +1,12 @@
 import React from 'react'
-import LoadMetric from './features/cpuLoad/LoadMetric'
 import './App.css'
+import LoadChart from './features/cpuLoad/LoadChart'
 
 function App() {
   return (
     <div className="App">
       <h1>Datadog CPU load monitoring</h1>
-      <LoadMetric currentLoad={0.5543} />
+      <LoadChart />
     </div>
   )
 }
