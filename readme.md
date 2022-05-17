@@ -24,10 +24,11 @@ cd front && npm test
 ## Todos
 
 - [x] Backend that can give back the cpu load through an API
-- [x] React Frontend (+redux?) able to fetch the load
+- [x] React Frontend (+redux?) able to fetch the current load
 - [x] Fetch on load and every 10s
-    - [ ] Store in the front in an appropriate DS. Discard useless data points
+    - [x] Store in the front in an appropriate DS. Discard useless data points
     - [ ] Identify load events in the front (heavy load = 2min+ @ >1.0, recovery = 2min+ @ <1.0)
+    - [x] Keep track of each heavy load or recovery event with timestamps
 - [ ] Display load in line graph + display current load
     - [ ] Use recharts?
 - [ ] Display heavy loads in the graph
@@ -58,6 +59,11 @@ cd front && npm test
 
 ### `2022-05-17`
 
+- Keeping track of load trends seems a bit too much for a 60-element array. Might be premature optimization....
+- Multiple ways of measuring the 2min windows for detecting loads and recoveries:
+-- 1/ Counting samples (based on sample frequency) -> Easy but not precise, and dependent on polling freq
+-- 2/ Keeping track of samplings timestamps when polling -> More precise, not dependent on polling freq
+-- Chose to go with timestamps, as it feels more natural to write tests and code is closer to instructions (speaking of window of 2 minutes instead of 120 samples)
 - Issues with testing state... because of non-reinitialized store
 - LoadChart doing both setInterval and dispatch is difficult to test
 
