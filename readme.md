@@ -28,7 +28,6 @@ cd front && npm test
 - [x] Fetch on load and every 10s
     - [ ] Store in the front in an appropriate DS. Discard useless data points
     - [ ] Identify load events in the front (heavy load = 2min+ @ >1.0, recovery = 2min+ @ <1.0)
-- [ ] Factor cpu load fetching in a wrapper component, make the chart and metric "API free"
 - [ ] Display load in line graph + display current load
     - [ ] Use recharts?
 - [ ] Display heavy loads in the graph
@@ -56,6 +55,11 @@ cd front && npm test
 - highlight high load intervals if any
 
 ## Notes
+
+### `2022-05-17`
+
+- Issues with testing state... because of non-reinitialized store
+- LoadChart doing both setInterval and dispatch is difficult to test
 
 ### `2022-05-16`
 
