@@ -1,14 +1,17 @@
 import loadReducer, { 
-  refreshLoadAsync, 
+  refreshLoadAsync,
+} from '../features/cpuLoad/loadSlice'
+import {
   trackHeavyLoadDuration, 
   trackNormalLoadDuration
-} from '../features/cpuLoad/loadSlice'
+} from '../features/cpuLoad/alertingRules'
 
 describe('CPU load reducer should', () => {
 
   const initialState = {
     currentLoad: 0,
     loadHistory: [],
+    events: []
   }
   const testTime = new Date('2022-01-01')
   const testTimeMs = testTime.getTime()
@@ -133,6 +136,64 @@ describe('CPU load reducer should', () => {
     expect(state.loadHistory[6].load).toBe(1.1)
     expect(state.loadHistory[6].underThresholdSince).toBe(null)
   })
+
+  describe('An alert should', () => {
+    test('go off when high load is detected for more than 2 minutes', () => {
+      jest
+        .useFakeTimers()
+        .setSystemTime(testTime)
+
+      const alertSample = [
+        1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0
+      ]
+
+      const state = buildMockedState(alertSample, sampleInterval)
+
+      const TIME_OF_SAMPLE_RAISING_ALERT = testTimeMs + 13 * sampleInterval
+
+      expect(state.events.length).toBe(1)
+      expect(state.events[0].time).toBe(TIME_OF_SAMPLE_RAISING_ALERT)
+      expect(state.events[0].type).toBe('HIGH_LOAD')
+    })
+  
+    test('be closed when the CPU recovers for more than 2 minutes', () => {
+      jest
+        .useFakeTimers()
+        .setSystemTime(testTime)
+
+      const recoverySample = [
+        1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
+        0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
+      ]
+
+      const state = buildMockedState(recoverySample, sampleInterval)
+
+      const TIME_OF_SAMPLE_RECOVERING = testTimeMs + 26 * sampleInterval
+
+      expect(state.events.length).toBe(2)
+      expect(state.events[1].time).toBe(TIME_OF_SAMPLE_RECOVERING)
+      expect(state.events[1].type).toBe('RECOVERY')
+    })
+  
+    test('not go off if an alert is already active', () => {
+      jest
+        .useFakeTimers()
+        .setSystemTime(testTime)
+
+      const recoverySample = [
+        1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
+        1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
+      ]
+
+      const state = buildMockedState(recoverySample, sampleInterval)
+
+      const TIME_OF_SAMPLE_RAISING_ALERT = testTimeMs + 13 * sampleInterval
+
+      expect(state.events.length).toBe(1)
+      expect(state.events[0].time).toBe(TIME_OF_SAMPLE_RAISING_ALERT)
+      expect(state.events[0].type).toBe('HIGH_LOAD')
+    })
+  })
 })
 
 describe('Heavy load history tracker should', () => {
@@ -214,4 +275,3 @@ describe('Recovery history tracker should', () => {
     ).toBe(trackedTime)
   })
 })
-

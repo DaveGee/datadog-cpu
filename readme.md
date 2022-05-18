@@ -27,7 +27,7 @@ cd front && npm test
 - [x] React Frontend (+redux?) able to fetch the current load
 - [x] Fetch on load and every 10s
     - [x] Store in the front in an appropriate DS. Discard useless data points
-    - [ ] Identify load events in the front (heavy load = 2min+ @ >1.0, recovery = 2min+ @ <1.0)
+    - [x] Identify load events in the front (heavy load = 2min+ @ >1.0, recovery = 2min+ @ <1.0)
     - [x] Keep track of each heavy load or recovery event with timestamps
 - [ ] Display load in line graph + display current load
     - [ ] Use recharts?
@@ -35,11 +35,12 @@ cd front && npm test
 - [ ] Display events (load + recovery)
 - [ ] Alert each time there's a detected change (desktop alert? other?)
 - [ ] Add a loading indicator for when is the next update (10s) indicating how old is the update
+- [ ] Display the current load in a separate component (isolate polling?)
 
 ### Misc
 
 - [] No types (TS would be nice) to test for robustness. Did not bother to add tests for "types"
-- [] Trusting that the API returns what it says. Not handling API errors, timeouts
+- [] Trusting that the API returns what it says. Not handling API errors, timeouts.
 
 ## Architecture & UX
 
@@ -56,6 +57,12 @@ cd front && npm test
 - highlight high load intervals if any
 
 ## Notes
+
+### `2022-05-18`
+
+- VSCode has Jest tests debug integrated.. no need for a plugin
+- Isolated "business rules" out of the reducer to make the extraReducer cleaner, and have the 10min/2min rules in a single file
+- Redux under-utilized, but still provide a nice separation of concern for testing. Also easily extendable
 
 ### `2022-05-17`
 

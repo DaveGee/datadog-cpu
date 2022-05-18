@@ -1,33 +1,34 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { fetchLoadMetric } from '../../services/loadAPI'
+import {
+  trackHeavyLoadDuration,
+  trackNormalLoadDuration,
+  shouldRecover,
+  shouldTriggerHighLoadAlert,
+  maxLoadHistoryReached
+} from './alertingRules'
 
-const MAX_HISTORY_MINUTES = 10
-const LOAD_THRESHOLD = 1.0
+const HIGH_LOAD_EVENT_TYPE = 'HIGH_LOAD'
+const RECOVERY_EVENT_TYPE = 'RECOVERY'
 
 const initialState = {
   currentLoad: 0,
   loadHistory: [],
+  events: []
 }
 
-export const trackHeavyLoadDuration = (previousSample, currentLoad, currentTime) => {
-  if (currentLoad >= LOAD_THRESHOLD) {
-    if (previousSample && previousSample.aboveThresholdSince)
-      return previousSample.aboveThresholdSince
+export const selectCurrentLoad = state => state.cpuLoad.currentLoad
+export const selectLastEvent = state => state.events.length > 0 ? state.events[state.events.length - 1] : null
+export const hasNoActiveAlert = state => (
+  state.events.length === 0
+  || selectLastEvent(state).type === RECOVERY_EVENT_TYPE
+)
+export const hasActiveAlert = state => (
+  state.events.length > 0 
+  && selectLastEvent(state).type === HIGH_LOAD_EVENT_TYPE
+)
 
-    return currentTime
-  }
-  return null
-}
-
-export const trackNormalLoadDuration = (previousSample, currentLoad, currentTime) => {
-  if (currentLoad < LOAD_THRESHOLD) {
-    if (previousSample && previousSample.underThresholdSince)
-      return previousSample.underThresholdSince
-    
-    return currentTime
-  }
-  return null
-}
+export const selectOldestSample = state => state.loadHistory[0]
 
 export const refreshLoadAsync = createAsyncThunk(
   'cpuLoad/fetchLoad',
@@ -58,16 +59,28 @@ export const loadSlice = createSlice({
           underThresholdSince,
         }
 
+        if (shouldTriggerHighLoadAlert(aboveThresholdSince, now, hasNoActiveAlert(state))) {
+          state.events.push({
+            time: now,
+            type: HIGH_LOAD_EVENT_TYPE
+          })
+        }
+
+        if(shouldRecover(underThresholdSince, now, hasActiveAlert(state))) {
+          state.events.push({
+            time: now,
+            type: RECOVERY_EVENT_TYPE
+          })
+        }
+
         state.loadHistory.push(newSample)
 
-        const oldest = state.loadHistory[0]
-        if (newSample.time - oldest.time > MAX_HISTORY_MINUTES * 60 * 1000) {
+        const oldest = selectOldestSample(state)
+        if (maxLoadHistoryReached(newSample.time, oldest.time)) {
           state.loadHistory.shift()
         }
       })
   }
 })
-
-export const selectCurrentLoad = state => state.cpuLoad.currentLoad
 
 export default loadSlice.reducer
