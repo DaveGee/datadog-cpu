@@ -43,8 +43,7 @@ export const shouldRecover = (underThresholdSince, timeNow, hasActiveAlert) => {
   return timeNow - underThresholdSince >= RECOVERY_THRESHOLD && hasActiveAlert
 }
 
-export const maxLoadHistoryReached = (latestTime, oldestTime) => 
-  latestTime - oldestTime > MAX_HISTORY_WINDOW
+export const maxHistoryWindow = () => MAX_HISTORY_WINDOW
 
 
 export const selectLastEvent = state => state.events.length > 0 ? state.events[state.events.length - 1] : null

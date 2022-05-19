@@ -1,11 +1,13 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { 
-  refreshLoadAsync, 
+  refreshLoadAsync,
+  injectTestData,
   selectCurrentLoad, 
   selectHistory,
   selectHighLoadEvents,
-  selectRecoveryEvents
+  selectRecoveryEvents,
+  selectRecentEvents
 } from './loadSlice'
 import LoadMetric from './LoadMetric'
 import Events from './Events'
@@ -26,13 +28,18 @@ const LoadFeature = () => {
   const highLoad = useSelector(selectHighLoadEvents)
   const recoverEvents = useSelector(selectRecoveryEvents)
 
+  const recentEvents = useSelector(selectRecentEvents(10 * 60 * 1000))
+
   return (
     <div className={styles.loadChartContainer}>
       <div className={styles.metrics}>
         <Events highLoad={highLoad} recoveries={recoverEvents} />
         <LoadMetric currentLoad={currentLoad} />
       </div>
-      <LoadChart history={history} />
+      <LoadChart history={history} recentEvents={recentEvents} />
+      <div>
+        <button onClick={e => dispatch(injectTestData())}>Simulate</button>
+      </div>
     </div>
   )
 }

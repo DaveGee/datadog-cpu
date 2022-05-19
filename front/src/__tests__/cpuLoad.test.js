@@ -72,6 +72,27 @@ describe('CPU load reducer should', () => {
     expect(state.loadHistory[0].load).toBe(39)
   })
 
+  test('correctly get rid of ALL samples outside of the sampling window of 10min', () => {
+    jest
+      .useFakeTimers()
+      .setSystemTime(testTime)
+    
+    const sample = [...Array(100).keys()]
+    let state = buildMockedState(sample, sampleInterval)
+
+    // get outside of the sampling window
+    jest.advanceTimersByTime(20 * 60 * 1000)
+
+    state = loadReducer(state, buildRefreshAction(5))
+
+    expect(state).toMatchObject({
+      currentLoad: 5,
+      loadHistory: expect.any(Array)
+    })
+    expect(state.loadHistory.length).toBe(1)
+    expect(state.loadHistory[0].load).toBe(5)
+  })
+
   test('record api calls\' timestamps when sampling the normalized load from the server', () => {
     jest
       .useFakeTimers()

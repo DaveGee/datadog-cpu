@@ -49,6 +49,11 @@ exports[`Monitoring app should render consistently 1`] = `
           width="100%"
         />
       </div>
+      <div>
+        <button>
+          Simulate
+        </button>
+      </div>
     </div>
   </div>
 </div>

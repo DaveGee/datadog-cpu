@@ -31,10 +31,11 @@ cd front && npm test
     - [x] Keep track of each heavy load or recovery event with timestamps
 - [x] Display load in line graph + display current load
 - [ ] Display heavy loads in the graph
-- [ ] Display events (load + recovery)
+- [ ] Display events (load + recovery) -> pass recent alerts to the chart
 - [ ] Alert each time there's a detected change (desktop alert? other?)
 - [ ] Add a loading indicator for when is the next update (10s) indicating how old is the update
 - [x] Display the current load in a separate component (isolate polling?)
+- [x] Add a simulation button to work on the UI
 
 ### Misc
 
@@ -61,6 +62,11 @@ cd front && npm test
 - display concentration of heavy loads by time of day, zoomable?
 
 ## Notes
+
+### `2022-05-20`
+
+- Getting rid of old samples (>10min) might be not very efficient. The previous way of doing was buggy if for some reason we had more than 1 sample falling at the same time outside of the window
+- Adding a fake data generator for 2 reasons: test my UI easily + demonstrate the full capability easily. Adding a button on the Front to "simulate". This is not unit tested at all
 
 ### `2022-05-19`
 

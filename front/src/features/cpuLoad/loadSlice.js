@@ -5,15 +5,15 @@ import {
   trackNormalLoadDuration,
   shouldRecover,
   shouldTriggerHighLoadAlert,
-  maxLoadHistoryReached,
   newHighLoadEvent,
   newRecoveryEvent,
   hasNoActiveAlert,
   hasActiveAlert,
-  selectOldestSample,
   isRecoveryEvent,
-  isHighLoadEvent
+  isHighLoadEvent,
+  maxHistoryWindow
 } from './alertingRules'
+import { generateShowCaseHistory, generateShowCaseEvents } from './showCaseData'
 
 const initialState = {
   currentLoad: 0,
@@ -25,6 +25,10 @@ export const selectCurrentLoad = state => state.cpuLoad.currentLoad
 export const selectHistory = state => state.cpuLoad.loadHistory
 export const selectRecoveryEvents = state => state.cpuLoad.events.filter(isRecoveryEvent)
 export const selectHighLoadEvents = state => state.cpuLoad.events.filter(isHighLoadEvent)
+export const selectRecentEvents = timeIntervalMs => {
+  const now = Date.now()
+  return state => state.cpuLoad.events.filter(ev => now - ev.time < timeIntervalMs)
+}
 
 export const refreshLoadAsync = createAsyncThunk(
   'cpuLoad/fetchLoad',
@@ -34,7 +38,12 @@ export const refreshLoadAsync = createAsyncThunk(
 export const loadSlice = createSlice({
   name: 'cpuLoad',
   initialState,
-  reducers: {},
+  reducers: {
+    injectTestData: (state) => {
+      state.loadHistory = generateShowCaseHistory()
+      state.events = generateShowCaseEvents()
+    },
+  },
   extraReducers: builder => {
     builder
       .addCase(refreshLoadAsync.fulfilled, (state, action) => {
@@ -65,12 +74,12 @@ export const loadSlice = createSlice({
 
         state.loadHistory.push(newSample)
 
-        const oldest = selectOldestSample(state)
-        if (maxLoadHistoryReached(newSample.time, oldest.time)) {
-          state.loadHistory.shift()
-        }
+        state.loadHistory = state.loadHistory.filter(sample => 
+          sample.time >= now - maxHistoryWindow()
+        )
       })
   }
 })
 
+export const { injectTestData } = loadSlice.actions
 export default loadSlice.reducer
