@@ -1,31 +1,18 @@
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { refreshLoadAsync, selectCurrentLoad, selectHistory } from './loadSlice'
 import { timeFormatter } from '../../services/formatter'
-import LoadMetric from './LoadMetric'
 import styles from './LoadFeature.module.css'
 
 import { LineChart, ResponsiveContainer, Line, XAxis, YAxis } from 'recharts'
 
-const LoadChart = () => {
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    dispatch(refreshLoadAsync())
-    const pollster = setInterval(() => dispatch(refreshLoadAsync()), 10000)
-    return () => clearInterval(pollster)
-  }, [dispatch])
-
-  const currentLoad = useSelector(selectCurrentLoad)
-  const history = useSelector(selectHistory)
+const LoadChart = ({
+  history
+}) => {
 
   let xLabels
-  if (history.length > 1) {
+  if (history && history.length > 1) {
     xLabels = [history[0].time, history[history.length - 1].time]
   }
 
-  return <div className={styles.loadChartContainer}>
-    <LoadMetric currentLoad={currentLoad} />
+  return (
     <div className={styles.loadChart}>
       <ResponsiveContainer width="100%" height="100%">
         <LineChart data={history}>
@@ -35,7 +22,7 @@ const LoadChart = () => {
         </LineChart>
       </ResponsiveContainer>
     </div>
-  </div>
+  )
 }
 
 export default LoadChart

@@ -2,26 +2,25 @@ import React from 'react'
 import { render, waitFor, screen } from '@testing-library/react'
 import { Provider } from 'react-redux'
 import { store, getStore } from '../app/store'
-import LoadChart from '../features/cpuLoad/LoadChart'
+import Load from '../features/cpuLoad/Load'
 import { refreshLoadAsync } from '../features/cpuLoad/loadSlice'
 import { baseUrl } from '../config'
 
-describe('The Load Chart widget should', () => {
+describe('The Load widget should', () => {
   beforeEach(() => {
     fetch.resetMocks()
     jest.useRealTimers()
     jest.restoreAllMocks()
   })
 
-  test('display 0 by default', () => {
+  test('display the current load', () => {
     render(
       <Provider store={store}>
-        <LoadChart />
+        <Load />
       </Provider>
     )
 
     expect(screen.getByText('Current load')).toBeInTheDocument()
-    expect(screen.getByText('0')).toBeInTheDocument()
   })
 
   test('call the load API to get the value on refresh action', async () => {
@@ -54,7 +53,7 @@ describe('The Load Chart widget should', () => {
     
     render(
       <Provider store={mockedStore}>
-        <LoadChart />
+        <Load />
       </Provider>
     )
 
@@ -80,7 +79,7 @@ describe('The Load Chart widget should', () => {
 
     render(
       <Provider store={mockedStore}>
-        <LoadChart />
+        <Load />
       </Provider>
     )
     expect(fetch.mock.calls.length).toEqual(1)

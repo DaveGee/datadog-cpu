@@ -64,6 +64,7 @@ cd front && npm test
 
 ### `2022-05-19`
 
+- Did not insist on UI testing (with testing library or through snapshot)
 - Did not test: some helpers, edge cases (like API responses and type of data in properties)
 - selectors in the `alertingRules` files don't work the same as the selector in the official redux selectors to be connected to hooks
 

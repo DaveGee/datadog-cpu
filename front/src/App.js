@@ -1,12 +1,12 @@
 import React from 'react'
 import './App.css'
-import LoadChart from './features/cpuLoad/LoadChart'
+import Load from './features/cpuLoad/Load'
 
 function App() {
   return (
     <div className="App">
       <h1>Datadog CPU load monitoring</h1>
-      <LoadChart />
+      <Load />
     </div>
   )
 }

@@ -11,16 +11,36 @@ exports[`Monitoring app should render consistently 1`] = `
     <div
       class="loadChartContainer"
     >
-      <span
-        class="metricLabel"
+      <div
+        class="metrics"
       >
-        Current load
-      </span>
-      <span
-        class="metricValue"
-      >
-        0
-      </span>
+        <dl
+          class="events"
+        >
+          <dt>
+            Alerts
+          </dt>
+          <dd>
+            0
+          </dd>
+          <dt>
+            Recoveries
+          </dt>
+          <dd>
+            0
+          </dd>
+        </dl>
+        <dl
+          class="loadMetric"
+        >
+          <dt>
+            Current load
+          </dt>
+          <dd>
+            0
+          </dd>
+        </dl>
+      </div>
       <div
         class="loadChart"
       >

@@ -3,10 +3,10 @@ import styles from './LoadFeature.module.css'
 const LoadMetric = ({
   currentLoad
 }) => (
-  <>
-    <span className={styles.metricLabel}>Current load</span>
-    <span className={styles.metricValue}>{currentLoad}</span>
-  </>
+  <dl className={styles.loadMetric}>
+    <dt>Current load</dt>
+    <dd>{currentLoad}</dd>
+  </dl>
 )
 
 export default LoadMetric

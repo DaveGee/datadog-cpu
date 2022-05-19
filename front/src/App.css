@@ -1,3 +1,7 @@
 .App {
-  width: 100%;
+  margin: 20px;
+}
+
+.App h1 {
+  font-weight: normal;
 }

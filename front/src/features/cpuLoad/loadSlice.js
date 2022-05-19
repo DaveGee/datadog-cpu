@@ -10,7 +10,9 @@ import {
   newRecoveryEvent,
   hasNoActiveAlert,
   hasActiveAlert,
-  selectOldestSample
+  selectOldestSample,
+  isRecoveryEvent,
+  isHighLoadEvent
 } from './alertingRules'
 
 const initialState = {
@@ -21,6 +23,8 @@ const initialState = {
 
 export const selectCurrentLoad = state => state.cpuLoad.currentLoad
 export const selectHistory = state => state.cpuLoad.loadHistory
+export const selectRecoveryEvents = state => state.cpuLoad.events.filter(isRecoveryEvent)
+export const selectHighLoadEvents = state => state.cpuLoad.events.filter(isHighLoadEvent)
 
 export const refreshLoadAsync = createAsyncThunk(
   'cpuLoad/fetchLoad',

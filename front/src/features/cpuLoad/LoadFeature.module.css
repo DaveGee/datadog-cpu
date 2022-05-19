@@ -1,20 +1,28 @@
 .loadChartContainer {
     margin: 0 auto;
-    padding: 50px;
-}
-
-.metricLabel {
-    display: block;
-    text-align: center;
-}
-
-.metricValue {
-    text-align: center;
-    display: block;
-    font-size: 3em;
-    overflow-x: hidden;
 }
 
 .loadChart {
     height: 500px;
+}
+
+.metrics {
+    display: flex;
+}
+
+.events, .loadMetric {
+    display: block;
+    display: flex;
+    width: 50%;
+}
+
+.loadMetric dt, .events dt {
+    margin: 0;
+    padding: 10px;
+}
+
+.loadMetric dd, .events dd {
+    margin: 0;
+    padding: 10px;
+    overflow-x: hidden;
 }

@@ -68,3 +68,6 @@ export const newHighLoadEvent = time => ({
   time,
   type: HIGH_LOAD_EVENT_TYPE
 })
+
+export const isHighLoadEvent = event => event.type === HIGH_LOAD_EVENT_TYPE
+export const isRecoveryEvent = event => event.type === RECOVERY_EVENT_TYPE
