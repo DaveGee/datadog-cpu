@@ -12,7 +12,16 @@ describe('Monitoring app should', () => {
       </Provider>
     )
 
-    expect(screen.getByText('CPU Load: 10 minute window')).toBeInTheDocument()
+    expect(screen.getByText('Current load')).toBeInTheDocument()
+  })
+
+  test('render consistently', () => {
+    const { container } = render(
+      <Provider store={store}>
+        <App />
+      </Provider>
+    )
+    expect(container).toMatchSnapshot()
   })
 })
 

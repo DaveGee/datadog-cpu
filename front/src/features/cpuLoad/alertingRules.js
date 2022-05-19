@@ -5,6 +5,10 @@ const RECOVERY_THRESHOLD = 2 * 60 * 1000
 
 const MAX_HISTORY_WINDOW = 10 * 60 * 1000
 
+const HIGH_LOAD_EVENT_TYPE = 'HIGH_LOAD'
+const RECOVERY_EVENT_TYPE = 'RECOVERY'
+
+
 export const trackHeavyLoadDuration = (previousSample, currentLoad, currentTime) => {
   if (currentLoad >= LOAD_THRESHOLD) {
     if (previousSample && previousSample.aboveThresholdSince)
@@ -41,3 +45,26 @@ export const shouldRecover = (underThresholdSince, timeNow, hasActiveAlert) => {
 
 export const maxLoadHistoryReached = (latestTime, oldestTime) => 
   latestTime - oldestTime > MAX_HISTORY_WINDOW
+
+
+export const selectLastEvent = state => state.events.length > 0 ? state.events[state.events.length - 1] : null
+export const selectOldestSample = state => state.loadHistory[0]
+
+export const hasNoActiveAlert = state => (
+  state.events.length === 0
+  || selectLastEvent(state).type === RECOVERY_EVENT_TYPE
+)
+export const hasActiveAlert = state => (
+  state.events.length > 0 
+  && selectLastEvent(state).type === HIGH_LOAD_EVENT_TYPE
+)
+
+export const newRecoveryEvent = time => ({
+  time,
+  type: RECOVERY_EVENT_TYPE
+})
+
+export const newHighLoadEvent = time => ({
+  time,
+  type: HIGH_LOAD_EVENT_TYPE
+})

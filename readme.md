@@ -29,40 +29,49 @@ cd front && npm test
     - [x] Store in the front in an appropriate DS. Discard useless data points
     - [x] Identify load events in the front (heavy load = 2min+ @ >1.0, recovery = 2min+ @ <1.0)
     - [x] Keep track of each heavy load or recovery event with timestamps
-- [ ] Display load in line graph + display current load
-    - [ ] Use recharts?
+- [x] Display load in line graph + display current load
 - [ ] Display heavy loads in the graph
 - [ ] Display events (load + recovery)
 - [ ] Alert each time there's a detected change (desktop alert? other?)
 - [ ] Add a loading indicator for when is the next update (10s) indicating how old is the update
-- [ ] Display the current load in a separate component (isolate polling?)
+- [x] Display the current load in a separate component (isolate polling?)
 
 ### Misc
 
-- [] No types (TS would be nice) to test for robustness. Did not bother to add tests for "types"
-- [] Trusting that the API returns what it says. Not handling API errors, timeouts.
+- [] No types (TS would be nice) to test for robustness. Did not add tests for JS objects
+- [] Trusting that the API returns what it says. Not handling API errors, timeouts, or data misalignments
 
 ## Architecture & UX
 
 - Each data point retrieved is "now". Meaning all other existing data points are "moved" -1 pos in the past (or -10s)
 - DS: 
     - array: need to fill the last position, and move all others down. OR need to reverse the array when displaying
-    - LL: can easily add a new data point, keep track of the "load status" separately. Can add even with the data point. Keep track of the last (Doubly LL?). To display, Run through the list "60x" max (start from the end). Easy to insert and destroy
+    - LinkedList: can easily add a new data point, keep track of the "load status" separately. Can add even with the data point. Keep track of the last (Doubly LL?). To display, Run through the list "60x" max (start from the end). Easy to insert and destroy.
+    - For this exercise: used an array with a push. Not ideal in performance, but fine for a PoC for 60 data points, and only 1 feature on the screen
 
 ### UX
 
-- Show the current value (decimals)
+- Show the current value (decimals?)
 - Show a line graph for -10min -> now, with all values
 - Show events on the line graph
 - highlight high load intervals if any
+- show the number of alerts, and recovery events
+- show if there is a current open alert
+- show notification when events happen
+- display concentration of heavy loads by time of day, zoomable?
 
 ## Notes
+
+### `2022-05-19`
+
+- Did not test: some helpers, edge cases (like API responses and type of data in properties)
+- selectors in the `alertingRules` files don't work the same as the selector in the official redux selectors to be connected to hooks
 
 ### `2022-05-18`
 
 - VSCode has Jest tests debug integrated.. no need for a plugin
 - Isolated "business rules" out of the reducer to make the extraReducer cleaner, and have the 10min/2min rules in a single file
-- Redux under-utilized, but still provide a nice separation of concern for testing. Also easily extendable
+- Redux under-utilized, but still provide a nice separation of concern for testing. Also easily extendable.
 
 ### `2022-05-17`
 

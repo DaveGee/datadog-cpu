@@ -1,7 +1,6 @@
 .loadChartContainer {
     margin: 0 auto;
-    padding: 5px;
-    color: #365c82;
+    padding: 50px;
 }
 
 .metricLabel {
@@ -14,4 +13,8 @@
     display: block;
     font-size: 3em;
     overflow-x: hidden;
+}
+
+.loadChart {
+    height: 500px;
 }

@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Monitoring app should render consistently 1`] = `
+<div>
+  <div
+    class="App"
+  >
+    <h1>
+      Datadog CPU load monitoring
+    </h1>
+    <div
+      class="loadChartContainer"
+    >
+      <span
+        class="metricLabel"
+      >
+        Current load
+      </span>
+      <span
+        class="metricValue"
+      >
+        0
+      </span>
+      <div
+        class="loadChart"
+      >
+        <div
+          height="100%"
+          width="100%"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

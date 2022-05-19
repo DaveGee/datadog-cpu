@@ -5,11 +5,13 @@ import {
   trackNormalLoadDuration,
   shouldRecover,
   shouldTriggerHighLoadAlert,
-  maxLoadHistoryReached
+  maxLoadHistoryReached,
+  newHighLoadEvent,
+  newRecoveryEvent,
+  hasNoActiveAlert,
+  hasActiveAlert,
+  selectOldestSample
 } from './alertingRules'
-
-const HIGH_LOAD_EVENT_TYPE = 'HIGH_LOAD'
-const RECOVERY_EVENT_TYPE = 'RECOVERY'
 
 const initialState = {
   currentLoad: 0,
@@ -18,17 +20,7 @@ const initialState = {
 }
 
 export const selectCurrentLoad = state => state.cpuLoad.currentLoad
-export const selectLastEvent = state => state.events.length > 0 ? state.events[state.events.length - 1] : null
-export const hasNoActiveAlert = state => (
-  state.events.length === 0
-  || selectLastEvent(state).type === RECOVERY_EVENT_TYPE
-)
-export const hasActiveAlert = state => (
-  state.events.length > 0 
-  && selectLastEvent(state).type === HIGH_LOAD_EVENT_TYPE
-)
-
-export const selectOldestSample = state => state.loadHistory[0]
+export const selectHistory = state => state.cpuLoad.loadHistory
 
 export const refreshLoadAsync = createAsyncThunk(
   'cpuLoad/fetchLoad',
@@ -60,17 +52,11 @@ export const loadSlice = createSlice({
         }
 
         if (shouldTriggerHighLoadAlert(aboveThresholdSince, now, hasNoActiveAlert(state))) {
-          state.events.push({
-            time: now,
-            type: HIGH_LOAD_EVENT_TYPE
-          })
+          state.events.push(newHighLoadEvent(now))
         }
 
         if(shouldRecover(underThresholdSince, now, hasActiveAlert(state))) {
-          state.events.push({
-            time: now,
-            type: RECOVERY_EVENT_TYPE
-          })
+          state.events.push(newRecoveryEvent(now))
         }
 
         state.loadHistory.push(newSample)

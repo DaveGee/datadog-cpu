@@ -6,3 +6,9 @@ import '@testing-library/jest-dom/extend-expect'
 
 import { enableFetchMocks } from 'jest-fetch-mock'
 enableFetchMocks()
+
+// suppress warning in UT for recharts. https://github.com/recharts/recharts/issues/727
+jest.mock('recharts', () => ({
+  ...jest.requireActual('recharts'),
+  ResponsiveContainer: props => <div {...props} />,
+}))
