@@ -29,6 +29,14 @@ export const selectRecentEvents = timeIntervalMs => {
   const now = Date.now()
   return state => state.cpuLoad.events.filter(ev => now - ev.time < timeIntervalMs)
 }
+export const selectOpenAlert = state => {
+  const lastEvent = state.cpuLoad.events[state.cpuLoad.events.length - 1]
+  if (lastEvent && isHighLoadEvent(lastEvent)) {
+    return lastEvent
+  }
+
+  return null
+}
 
 export const refreshLoadAsync = createAsyncThunk(
   'cpuLoad/fetchLoad',

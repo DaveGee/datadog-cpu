@@ -35,10 +35,10 @@ cd front && npm test
 - [x] Add a simulation button to work on the UI
 - [ ] Alert each time there's a detected change (desktop alert? other?)
 - [ ] Add a loading indicator for when is the next update (10s) indicating how old is the update
-- [ ] Show if there's an active alert, and since when
+- [x] Show if there's an active alert, and since when
 - [ ] Show event history (timeline)
 - [ ] Show bar chart of events for a typical day
-- [ ] Make it a bit more beautiful
+- [x] Make it a bit more beautiful
 
 ### Misc
 
@@ -68,6 +68,7 @@ cd front && npm test
 
 ### `2022-05-20`
 
+- Should probably separate the `cpu load` feature and the `alerting` feature. Although the reducer would still be shared..
 - Tested only on Chrome & Safari. 
 - Discussing with the "PO" (Coralie), we agree that: 
 -- It's fine to use a framework for charts (rechart), no need to chart myself.

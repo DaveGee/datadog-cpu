@@ -7,7 +7,8 @@ import {
   selectHistory,
   selectHighLoadEvents,
   selectRecoveryEvents,
-  selectRecentEvents
+  selectRecentEvents,
+  selectOpenAlert
 } from './loadSlice'
 import LoadMetric from './LoadMetric'
 import Events from './Events'
@@ -27,13 +28,13 @@ const LoadFeature = () => {
   const history = useSelector(selectHistory)
   const highLoad = useSelector(selectHighLoadEvents)
   const recoverEvents = useSelector(selectRecoveryEvents)
-
+  const openAlert = useSelector(selectOpenAlert)
   const recentEvents = useSelector(selectRecentEvents(10 * 60 * 1000))
 
   return (
     <div className={styles.loadChartContainer}>
       <div className={styles.metrics}>
-        <Events highLoad={highLoad} recoveries={recoverEvents} />
+        <Events highLoad={highLoad} recoveries={recoverEvents} openAlert={openAlert} />
         <LoadMetric currentLoad={currentLoad} />
         <button onClick={e => dispatch(injectTestData())}>simulate load</button>
       </div>
