@@ -40,8 +40,8 @@ export const loadSlice = createSlice({
   initialState,
   reducers: {
     injectTestData: (state) => {
-      state.loadHistory = generateShowCaseHistory()
       state.events = generateShowCaseEvents()
+      state.loadHistory = generateShowCaseHistory()
     },
   },
   extraReducers: builder => {

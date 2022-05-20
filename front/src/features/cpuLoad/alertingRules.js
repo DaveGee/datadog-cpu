@@ -5,8 +5,8 @@ const RECOVERY_THRESHOLD = 2 * 60 * 1000
 
 const MAX_HISTORY_WINDOW = 10 * 60 * 1000
 
-const HIGH_LOAD_EVENT_TYPE = 'HIGH_LOAD'
-const RECOVERY_EVENT_TYPE = 'RECOVERY'
+export const HIGH_LOAD_EVENT_TYPE = 'HIGH_LOAD'
+export const RECOVERY_EVENT_TYPE = 'RECOVERY'
 
 
 export const trackHeavyLoadDuration = (previousSample, currentLoad, currentTime) => {

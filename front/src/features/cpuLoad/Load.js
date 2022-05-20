@@ -35,11 +35,9 @@ const LoadFeature = () => {
       <div className={styles.metrics}>
         <Events highLoad={highLoad} recoveries={recoverEvents} />
         <LoadMetric currentLoad={currentLoad} />
+        <button onClick={e => dispatch(injectTestData())}>simulate load</button>
       </div>
       <LoadChart history={history} recentEvents={recentEvents} />
-      <div>
-        <button onClick={e => dispatch(injectTestData())}>Simulate</button>
-      </div>
     </div>
   )
 }

@@ -5,6 +5,7 @@ import { store, getStore } from '../app/store'
 import Load from '../features/cpuLoad/Load'
 import { refreshLoadAsync } from '../features/cpuLoad/loadSlice'
 import { baseUrl } from '../config'
+import { cpuLoadFormatter } from '../services/formatter'
 
 describe('The Load widget should', () => {
   beforeEach(() => {
@@ -20,7 +21,7 @@ describe('The Load widget should', () => {
       </Provider>
     )
 
-    expect(screen.getByText('Current load')).toBeInTheDocument()
+    expect(screen.getByText('current CPU load')).toBeInTheDocument()
   })
 
   test('call the load API to get the value on refresh action', async () => {
@@ -61,7 +62,7 @@ describe('The Load widget should', () => {
     expect(fetch.mock.calls[0][0]).toEqual(baseUrl + 'load')
 
     await waitFor(() => {
-      expect(screen.getByText('0.3')).toBeInTheDocument()
+      expect(screen.getByText(cpuLoadFormatter(0.3))).toBeInTheDocument()
     })
   })
 
@@ -94,7 +95,7 @@ describe('The Load widget should', () => {
     expect(fetch.mock.calls.length).toEqual(2)
 
     await waitFor(() => {
-      expect(screen.getByText(0.2)).toBeInTheDocument()
+      expect(screen.getByText(cpuLoadFormatter(0.2))).toBeInTheDocument()
     })
   })
 })

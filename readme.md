@@ -30,17 +30,20 @@ cd front && npm test
     - [x] Identify load events in the front (heavy load = 2min+ @ >1.0, recovery = 2min+ @ <1.0)
     - [x] Keep track of each heavy load or recovery event with timestamps
 - [x] Display load in line graph + display current load
-- [ ] Display heavy loads in the graph
-- [ ] Display events (load + recovery) -> pass recent alerts to the chart
-- [ ] Alert each time there's a detected change (desktop alert? other?)
-- [ ] Add a loading indicator for when is the next update (10s) indicating how old is the update
+- [x] Display events (load + recovery) -> pass recent alerts to the chart
 - [x] Display the current load in a separate component (isolate polling?)
 - [x] Add a simulation button to work on the UI
+- [ ] Alert each time there's a detected change (desktop alert? other?)
+- [ ] Add a loading indicator for when is the next update (10s) indicating how old is the update
+- [ ] Show if there's an active alert, and since when
+- [ ] Show event history (timeline)
+- [ ] Show bar chart of events for a typical day
+- [ ] Make it a bit more beautiful
 
 ### Misc
 
-- [] No types (TS would be nice) to test for robustness. Did not add tests for JS objects
-- [] Trusting that the API returns what it says. Not handling API errors, timeouts, or data misalignments
+- No types (TS would be nice) to test for robustness. Did not add tests for JS objects
+- Trusting that the API returns what it says. Not handling API errors, timeouts, or data misalignments
 
 ## Architecture & UX
 
@@ -65,6 +68,11 @@ cd front && npm test
 
 ### `2022-05-20`
 
+- Tested only on Chrome & Safari. 
+- Discussing with the "PO" (Coralie), we agree that: 
+-- It's fine to use a framework for charts (rechart), no need to chart myself.
+-- No extra effort on making it responsive or adapted (normal computer screen with minimum resize capabilities)
+-- Backend can be very dumb, a bit smarter, or very smart. Keeping it very dumb for now (no memory at all, not even live. Only the front remembers).
 - Getting rid of old samples (>10min) might be not very efficient. The previous way of doing was buggy if for some reason we had more than 1 sample falling at the same time outside of the window
 - Adding a fake data generator for 2 reasons: test my UI easily + demonstrate the full capability easily. Adding a button on the Front to "simulate". This is not unit tested at all
 

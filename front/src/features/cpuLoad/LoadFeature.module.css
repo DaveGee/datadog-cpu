@@ -10,19 +10,38 @@
     display: flex;
 }
 
+.metrics button {
+    margin: auto;
+    padding: 10px;
+    color: #505050;
+    font-size: 1em;
+    background-color: white;
+    font-variant: small-caps;
+    border: 1px solid #505050;
+    display: flex;
+    flex: none;
+}
+.metrics button:hover {
+    background: lightgray;
+}
+
 .events, .loadMetric {
     display: block;
     display: flex;
     width: 50%;
+    font-size: 1.6em;
 }
 
 .loadMetric dt, .events dt {
     margin: 0;
-    padding: 10px;
+    padding: 10px 10px 10px 0;
+    line-height: 3em;
+    color: #505050;
 }
 
 .loadMetric dd, .events dd {
     margin: 0;
-    padding: 10px;
+    padding: 10px 30px 10px 0;
     overflow-x: hidden;
+    font-size: 2em;;
 }

@@ -1,7 +1,12 @@
 .App {
   margin: 20px;
+  font-variant: small-caps;
+  font-family: 'Roboto', sans-serif;
+  min-width: 1000px;
 }
 
 .App h1 {
   font-weight: normal;
+  font-size: 3em;
+  margin: 0;
 }

@@ -6,9 +6,9 @@ const LoadEvents = ({
   recoveries
 }) => (
   <dl className={styles.events}>
-    <dt>Alerts</dt>
+    <dt>high load alerts</dt>
     <dd>{highLoad.length}</dd>
-    <dt>Recoveries</dt>
+    <dt>recoveries</dt>
     <dd>{recoveries.length}</dd>
   </dl>
 )

@@ -6,7 +6,7 @@ exports[`Monitoring app should render consistently 1`] = `
     class="App"
   >
     <h1>
-      Datadog CPU load monitoring
+      datadog CPU load monitoring
     </h1>
     <div
       class="loadChartContainer"
@@ -18,13 +18,13 @@ exports[`Monitoring app should render consistently 1`] = `
           class="events"
         >
           <dt>
-            Alerts
+            high load alerts
           </dt>
           <dd>
             0
           </dd>
           <dt>
-            Recoveries
+            recoveries
           </dt>
           <dd>
             0
@@ -34,12 +34,15 @@ exports[`Monitoring app should render consistently 1`] = `
           class="loadMetric"
         >
           <dt>
-            Current load
+            current CPU load
           </dt>
           <dd>
-            0
+            0.00
           </dd>
         </dl>
+        <button>
+          simulate load
+        </button>
       </div>
       <div
         class="loadChart"
@@ -48,11 +51,6 @@ exports[`Monitoring app should render consistently 1`] = `
           height="100%"
           width="100%"
         />
-      </div>
-      <div>
-        <button>
-          Simulate
-        </button>
       </div>
     </div>
   </div>

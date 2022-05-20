@@ -12,7 +12,7 @@ describe('Monitoring app should', () => {
       </Provider>
     )
 
-    expect(screen.getByText('Current load')).toBeInTheDocument()
+    expect(screen.getByText('current CPU load')).toBeInTheDocument()
   })
 
   test('render consistently', () => {
