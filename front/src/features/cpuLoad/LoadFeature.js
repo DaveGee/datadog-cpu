@@ -14,6 +14,7 @@ import LoadMetric from './LoadMetric'
 import Events from './Events'
 import LoadChart from './LoadChart'
 import styles from './LoadFeature.module.css'
+import LoadNotifications from './LoadNotifications'
 
 const LoadFeature = () => {
   const dispatch = useDispatch()
@@ -33,6 +34,7 @@ const LoadFeature = () => {
 
   return (
     <div className={styles.loadChartContainer}>
+      <LoadNotifications />
       <div className={styles.metrics}>
         <Events highLoad={highLoad} recoveries={recoverEvents} openAlert={openAlert} />
         <LoadMetric currentLoad={currentLoad} />

@@ -1,6 +1,6 @@
 import React from 'react'
 import './App.css'
-import Load from './features/cpuLoad/Load'
+import LoadFeature from './features/cpuLoad/LoadFeature'
 
 function App() {
   return (
@@ -8,7 +8,7 @@ function App() {
       <h1>
         datadog CPU load monitoring
       </h1>
-      <Load />
+      <LoadFeature />
     </div>
   )
 }

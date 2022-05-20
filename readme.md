@@ -33,17 +33,15 @@ cd front && npm test
 - [x] Display events (load + recovery) -> pass recent alerts to the chart
 - [x] Display the current load in a separate component (isolate polling?)
 - [x] Add a simulation button to work on the UI
-- [ ] Alert each time there's a detected change (desktop alert? other?)
-- [ ] Add a loading indicator for when is the next update (10s) indicating how old is the update
+- [x] Notifiation each time there's a detected change
 - [x] Show if there's an active alert, and since when
 - [ ] Show event history (timeline)
 - [ ] Show bar chart of events for a typical day
 - [x] Make it a bit more beautiful
 
-### Misc
+### Bonus
 
-- No types (TS would be nice) to test for robustness. Did not add tests for JS objects
-- Trusting that the API returns what it says. Not handling API errors, timeouts, or data misalignments
+- [ ] Make the backend "remember" load as long as it's on (no persistence, but in-memory cache)
 
 ## Architecture & UX
 
@@ -68,6 +66,7 @@ cd front && npm test
 
 ### `2022-05-20`
 
+- Redux/reducer: under the hood, uses Immer to do "mutating" immutable change to the state => forEach for arrays are fine
 - Should probably separate the `cpu load` feature and the `alerting` feature. Although the reducer would still be shared..
 - Tested only on Chrome & Safari. 
 - Discussing with the "PO" (Coralie), we agree that: 
@@ -121,4 +120,5 @@ cd front && npm test
     - when 12 data points are over or equal 1.0 => heavy load event detected
     - when 12 data points are below 1.0, and after an unsolved heavy load => system has recovered
 - Assumed that the node service does neither store, nor remember past values (doesn't keep it in memory). Meaning the front app can't retrieve past data, it has to be launched. It can also not retrieve "missed" data if for example a few call are unsuccessful.
-
+- No types (TS would be nice, but take me too much time on top of the rest). Will not add tests for JS domain objects. => Ok for a PoC
+- Trusting that the API returns what it says. Not handling API errors, timeouts, or potential data misalignments.

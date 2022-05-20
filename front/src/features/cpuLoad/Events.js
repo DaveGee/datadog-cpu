@@ -13,7 +13,7 @@ const LoadEvents = ({
       {highLoad.length}
       {
         openAlert && (
-          <span className={styles.alertIndicator} data-text={"an high load is detected since " + timeFormatter(openAlert.time)}>
+          <span className={styles.alertIndicator} data-text={"high load detected since " + timeFormatter(openAlert.time)}>
             <IoAlertCircleOutline />
           </span>
         )

@@ -2,7 +2,7 @@ import React from 'react'
 import { render, waitFor, screen } from '@testing-library/react'
 import { Provider } from 'react-redux'
 import { store, getStore } from '../app/store'
-import Load from '../features/cpuLoad/Load'
+import LoadFeature from '../features/cpuLoad/LoadFeature'
 import { refreshLoadAsync } from '../features/cpuLoad/loadSlice'
 import { baseUrl } from '../config'
 import { cpuLoadFormatter } from '../services/formatter'
@@ -17,7 +17,7 @@ describe('The Load widget should', () => {
   test('display the current load', () => {
     render(
       <Provider store={store}>
-        <Load />
+        <LoadFeature />
       </Provider>
     )
 
@@ -54,7 +54,7 @@ describe('The Load widget should', () => {
     
     render(
       <Provider store={mockedStore}>
-        <Load />
+        <LoadFeature />
       </Provider>
     )
 
@@ -80,7 +80,7 @@ describe('The Load widget should', () => {
 
     render(
       <Provider store={mockedStore}>
-        <Load />
+        <LoadFeature />
       </Provider>
     )
     expect(fetch.mock.calls.length).toEqual(1)

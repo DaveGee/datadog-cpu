@@ -34,9 +34,9 @@ export const selectOpenAlert = state => {
   if (lastEvent && isHighLoadEvent(lastEvent)) {
     return lastEvent
   }
-
   return null
 }
+export const selectNewEvents = state => state.cpuLoad.events.filter(e => !e.notified)
 
 export const refreshLoadAsync = createAsyncThunk(
   'cpuLoad/fetchLoad',
@@ -47,6 +47,15 @@ export const loadSlice = createSlice({
   name: 'cpuLoad',
   initialState,
   reducers: {
+    silence: (state, action) => {
+      const event = action.payload
+
+      state.events
+        .filter(e => e.time === event.time && e.type === event.type)
+        .forEach(e => {
+          e.notified = true
+        })
+    },
     injectTestData: (state) => {
       state.events = generateShowCaseEvents()
       state.loadHistory = generateShowCaseHistory()
@@ -89,5 +98,5 @@ export const loadSlice = createSlice({
   }
 })
 
-export const { injectTestData } = loadSlice.actions
+export const { silence, injectTestData } = loadSlice.actions
 export default loadSlice.reducer
