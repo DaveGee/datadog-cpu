@@ -7,8 +7,6 @@ const getLoad = () => {
   const [load1] = os.loadavg()
   const normalizedLoad = os.loadavg()[0] / numCpus
   return {
-    numCpus,
-    load1,
     normalizedLoad
   }
 }

@@ -70,8 +70,10 @@ export const loadSlice = createSlice({
 
         state.currentLoad = normalizedLoad
 
+        // get the last sample, if any, in order to detect recovery and high load events
         const previousSample = state.loadHistory[state.loadHistory.length - 1]
 
+        // remember since when we are above or under threshold, to detect when we pass the 2minutes interval required to fire a load event
         const now = Date.now()
         const aboveThresholdSince = trackHeavyLoadDuration(previousSample, normalizedLoad, now)
         const underThresholdSince = trackNormalLoadDuration(previousSample, normalizedLoad, now)
@@ -83,6 +85,8 @@ export const loadSlice = createSlice({
           underThresholdSince,
         }
 
+        // Should we trigger high load or recovery events?
+        // events themselves will be stored independently, and maintained beyond the 10min window
         if (shouldTriggerHighLoadAlert(aboveThresholdSince, now, hasNoActiveAlert(state))) {
           state.events.push(newHighLoadEvent(now))
           newSample.raised = HIGH_LOAD_EVENT_TYPE
@@ -93,6 +97,7 @@ export const loadSlice = createSlice({
           newSample.raised = RECOVERY_EVENT_TYPE
         }
 
+        // add the new sample to the history, and remove the samples that fall outside of the history window
         state.loadHistory.push(newSample)
 
         state.loadHistory = state.loadHistory.filter(sample => 

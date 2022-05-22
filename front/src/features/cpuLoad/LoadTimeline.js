@@ -13,13 +13,14 @@ import { selectRecentEvents } from "./loadSlice"
 import { timeFormatter } from "../../services/formatter"
 import styles from './LoadTimeline.module.css'
 
+// Component to display the tooltip of the events in the timeline
 const CustomTooltip = ({ active, payload }) => {
   if (active && payload && payload.length) {
     const event = payload[0].payload
     return (
       <div className={styles.customTooltip}>
-        <p className="label">{`time : ${timeFormatter(event.time)}`}</p>
-        <p className="type">
+        <p>{`time : ${timeFormatter(event.time)}`}</p>
+        <p>
           {
             isHighLoadEvent(event) ?
               "HIGHLOAD DETECTED"
@@ -33,6 +34,7 @@ const CustomTooltip = ({ active, payload }) => {
   return null
 }
 
+// options of the visualization of the timeline
 const ONE_HOUR = 60 * 60 * 1000
 const THREE_HOURS = 3 * ONE_HOUR
 const ONE_DAY = 24 * ONE_HOUR
@@ -58,6 +60,7 @@ const LoadTimeline = () => {
   const now = Date.now()
   const events = useSelector(selectRecentEvents(timeWindowMs))
 
+  // index is the YAxis value. So all indicators are shown at the same height
   const data = events.map(e => ({
     ...e,
     index: 1
