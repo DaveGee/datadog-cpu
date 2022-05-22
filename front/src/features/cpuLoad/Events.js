@@ -2,7 +2,7 @@ import { IoAlertCircleOutline } from 'react-icons/io5'
 import { timeFormatter } from '../../services/formatter'
 import styles from './LoadFeature.module.css'
 
-const LoadEvents = ({
+const Events = ({
   highLoad,
   recoveries,
   openAlert
@@ -24,4 +24,4 @@ const LoadEvents = ({
   </dl>
 )
 
-export default LoadEvents
+export default Events

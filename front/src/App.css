@@ -10,3 +10,16 @@
   font-size: 3em;
   margin: 0;
 }
+
+button {
+  margin: 0 5px;
+  padding: 5px 10px;
+  color: #505050;
+  font-size: 1em;
+  background-color: white;
+  font-variant: small-caps;
+  border: 1px solid #505050;
+}
+button:hover {
+  background: lightgray;
+}

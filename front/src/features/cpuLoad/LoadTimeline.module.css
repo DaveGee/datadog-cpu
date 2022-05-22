@@ -1,0 +1,18 @@
+
+.eventTimeline {
+  height: 300px;
+}
+
+.customTooltip {
+  background: white;
+  border: 1px solid grey;
+  padding: 0 10px;
+}
+
+.eventTimelineSelector {
+  padding: 10px;
+} 
+
+.activeSelector {
+  background-color: #e0e0e0;
+}

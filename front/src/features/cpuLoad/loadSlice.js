@@ -11,7 +11,9 @@ import {
   hasActiveAlert,
   isRecoveryEvent,
   isHighLoadEvent,
-  maxHistoryWindow
+  maxHistoryWindow,
+  HIGH_LOAD_EVENT_TYPE,
+  RECOVERY_EVENT_TYPE
 } from './alertingRules'
 import { generateShowCaseHistory, generateShowCaseEvents } from './showCaseData'
 
@@ -83,10 +85,12 @@ export const loadSlice = createSlice({
 
         if (shouldTriggerHighLoadAlert(aboveThresholdSince, now, hasNoActiveAlert(state))) {
           state.events.push(newHighLoadEvent(now))
+          newSample.raised = HIGH_LOAD_EVENT_TYPE
         }
 
         if(shouldRecover(underThresholdSince, now, hasActiveAlert(state))) {
           state.events.push(newRecoveryEvent(now))
+          newSample.raised = RECOVERY_EVENT_TYPE
         }
 
         state.loadHistory.push(newSample)

@@ -51,7 +51,7 @@ const generateData = () => {
 }
 
 export const generateShowCaseHistory = () => 
-  generateData().map(({ load, time }) => ({ load, time }))
+  generateData().map(({ load, time, event }) => ({ load, time, raised: event.type }))
 
 export const generateShowCaseEvents = () => 
   generateData()

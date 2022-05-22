@@ -53,6 +53,34 @@ exports[`Monitoring app should render consistently 1`] = `
         />
       </div>
     </div>
+    <div
+      class="eventTimeline"
+    >
+      <div
+        class="eventTimelineSelector"
+      >
+        <span>
+          event timeline
+        </span>
+        <span>
+          <button
+            class="activeSelector"
+          >
+            1h
+          </button>
+          <button>
+            3h
+          </button>
+          <button>
+            1d
+          </button>
+        </span>
+      </div>
+      <div
+        height="60"
+        width="100%"
+      />
+    </div>
   </div>
 </div>
 `;

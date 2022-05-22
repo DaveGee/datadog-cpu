@@ -35,13 +35,13 @@ cd front && npm test
 - [x] Add a simulation button to work on the UI
 - [x] Notifiation each time there's a detected change
 - [x] Show if there's an active alert, and since when
-- [ ] Show event history (timeline)
-- [ ] Show bar chart of events for a typical day
+- [x] Show event history (timeline)
 - [x] Make it a bit more beautiful
 
 ### Bonus
 
 - [ ] Make the backend "remember" load as long as it's on (no persistence, but in-memory cache)
+- [ ] Show a ration of high load over the know time period
 
 ## Architecture & UX
 
@@ -63,6 +63,12 @@ cd front && npm test
 - display concentration of heavy loads by time of day, zoomable?
 
 ## Notes
+
+### `2022-05-21`
+
+- Code organization in feature `cpuLoad` is a bit messy. => Need a better strategy between components that are view only, and those that are connected to the state
+-- Container vs. Presenation components => find the right balance
+-- CSS would benefit a review too
 
 ### `2022-05-20`
 
