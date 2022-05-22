@@ -9,22 +9,33 @@ This web app retrieves the normalized CPU load, and displays a 10min history of 
 
 Start the backend first (see [details](backend/readme.md))
 
+In the `backend` folder
 ```bash
-cd backend && node load
+node load
 ```
 
-Start the front once the backend is running. Default port for the backend is 8080. If you change above, change below too.
+In another terminal, go in the `front` folder and install dependencies
 
 ```bash
-cd front && npm start
+npm i
 ```
 
-To run tests
+Then start the front. (Default port for the backend is 8080. If you change above, change below too)
+
+This will start the app in "dev" mode, which should be best to test the app rapidly. To build it for deployment, follow instructions linked to `create-react-app` in the [front readme](front/README.md)
+
 ```bash
-cd front && npm test
+npm start
 ```
 
-(To change the URL of the backend, edit the `config.js` file in the  `front` folder, or set the env var `REACT_APP_BASE_URL`)
+If you want to run the test suite, still in the `front` folder:
+
+To run tests:
+```bash
+npm test -- --watchAll=false
+```
+
+this will run without the watcher. To start them with the watcher, use `npm test`
 
 ## User guide
 
@@ -35,6 +46,7 @@ cd front && npm test
 
 - The **High load alerts** indicator is the number of times the threshold was hit (2 minutes above 1.0) since the frontend started
     - They show as small "triangles" in the charts
+    - If the last event is a high load without recovery, a small indicator next to the metric will show since when it's heating.
 
 - The **Recoveries** indicator is the number of times the CPU went back below 1.0 for more than 2 minutes, given a previous alert.
     - They show as "white circles" in the charts

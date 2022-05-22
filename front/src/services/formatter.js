@@ -11,4 +11,4 @@ export const timeFormatter = time => {
   return `${hours}:${zeroed(min)}:${zeroed(sec)}`
 }
 
-export const cpuLoadFormatter = (load) => load.toFixed(2)
+export const cpuLoadFormatter = load => load.toFixed(2)

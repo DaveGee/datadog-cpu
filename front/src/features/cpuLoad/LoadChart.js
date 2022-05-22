@@ -14,6 +14,19 @@ import {
 import React from 'react'
 import { HIGH_LOAD_EVENT_TYPE, RECOVERY_EVENT_TYPE } from './alertingRules'
 
+export const tooltipFormatter = (load, name, props) => {
+  if (name === 'load') {
+    return cpuLoadFormatter(load)
+  }
+  if (name === 'recovery') {
+    return 'below 1.0 for 2 minutes'
+  }
+  if (name === 'high load') {
+    return 'above 1.0 for 2 minutes'
+  }
+}
+
+
 const LoadChart = ({
   history
 }) => {
@@ -34,7 +47,7 @@ const LoadChart = ({
     <div className={styles.loadChart}>
       <ResponsiveContainer width="100%" height="100%" >
         <ComposedChart data={data} margin={{ top: 30, left: 30, bottom: 30, right: 30 }}>
-          <Tooltip formatter={cpuLoadFormatter} labelFormatter={timeFormatter} />
+          <Tooltip formatter={tooltipFormatter} labelFormatter={timeFormatter} itemStyle={{color: 'black'}} />
           <ReferenceLine y={1} stroke="black" strokeDasharray="5 2" />
           <XAxis type="number" dataKey="time" tickFormatter={timeFormatter} domain={window} ticks={window} strokeWidth={2} dy={10}>
             <Label value="last 10 minutes" position="insideBottom" />
